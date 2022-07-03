@@ -455,3 +455,20 @@ $footer-text-color: #6e6e73;
     }
 
 }
+
+.login {
+    &__label {
+        font-weight: 300;
+        font-size: 20px;
+        line-height: 36px;
+        letter-spacing: 0.09em;
+    }
+    &__input {
+        width: 94%;
+        height: 51px;
+        background: #F9F2F2;
+        border: 1px solid #746363;
+        box-shadow: 5px 7px 20px rgba(0, 0, 0, 0.25);
+        border-radius: 8px;
+    }
+}

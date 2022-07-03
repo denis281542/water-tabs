@@ -1,12 +1,12 @@
 const Input = () => {
-    return(
+    return(<>
     <div>
         <label
             htmlFor='comment'
-            // className={labelComment} 
+            className="login__label"
         >Комментарий</label>
         <input 
-            // className={inputClassComment}
+            className="login__input"
             // onFocus={() => setFocusComment(true)}
             // onBlur={() => valueComment.length === 0 ? setFocusComment(false) : null}
             type='comment'
@@ -15,7 +15,24 @@ const Input = () => {
             // onChange={e => setValueComment(e.target.value)}
             // value={valueComment}
         />
-    </div>)
+    </div>
+    <div>
+        <label
+            htmlFor='comment'
+            className="login__label"
+        >Комментарий</label>
+        <input 
+            className="login__input"
+            // onFocus={() => setFocusComment(true)}
+            // onBlur={() => valueComment.length === 0 ? setFocusComment(false) : null}
+            type='comment'
+            id='comment'
+            name='comment'                    
+            // onChange={e => setValueComment(e.target.value)}
+            // value={valueComment}
+        />
+    </div>
+    </>)
 }
 
 export default Input
