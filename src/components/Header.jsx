@@ -11,6 +11,9 @@ const Header = () => {
     const user = useSelector(state => state.user.name)
     const isOpen = useSelector(state => state.modal.isOpen);
 
+    const closeModal = () => {
+        dispatch(isOpenModal(false))
+    }
 
     return(<header className="header">
         <img 
@@ -19,10 +22,7 @@ const Header = () => {
             alt="Логотип сайта по замене счетчиков воды в Верхней Салде"
         />
         <div className="header__contacts">
-            {isOpen 
-                ? <Modal children={<Login/>}/> 
-                : null
-            }
+            {isOpen && <Modal children={<Login/>} closeModal={closeModal} />}
             {user 
                 ? <Link 
                     className="header__btn" 

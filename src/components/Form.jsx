@@ -1,9 +1,7 @@
 import { useState, useEffect, useRef } from "react";
 import { useDispatch, useSelector } from 'react-redux'
 import formImg from '../assets/images/undraw_Receipt_re_fre3.png';
-import { isOpenModal } from "../store/modal/modalSlice";
-// import Modal from './components/modal';
-// import ModalContent from './components/ModalContent';
+import { isOpenModalForm } from "../store/modal/modalSlice";
 import { createOrder } from "../store/order/orderSlice";
 import { createUser } from "../store/user/userSlice";
 import Modal from "./modal";
@@ -18,15 +16,9 @@ const Form = () => {
     const dispatch = useDispatch()
 
     const scrollToForm = useSelector(state => state.anchor.clickCounter);
-    const isOpen = useSelector(state => state.modal.isOpen);
-
+    const isOpenForm = useSelector(state => state.modal.isOpenForm);
+    console.log(isOpenForm);
     const contactForm = useRef(null);
-
-    useEffect(() => {
-        if(scrollToForm) {
-            contactForm.current.scrollIntoView({behavior: "smooth"})
-        }
-    }, [scrollToForm] )
 
     let labelPhone = "label"
     let labelDate = "label"
@@ -87,7 +79,7 @@ const Form = () => {
     const submit = e => {
         e.preventDefault()
 
-        dispatch(isOpenModal(true))   
+        dispatch(isOpenModalForm(true))   
 
         new Promise(resolve => {
             resolve(dispatch(createUser({
@@ -105,11 +97,21 @@ const Form = () => {
         resetFormData()        
     }
 
+    const closeModal = () => {
+        dispatch(isOpenModalForm(false))
+    }
+
     useEffect(() => {
         if(errorName || errorPhone || errorDate || !focusName || !focusPhone || !focusDate) {
             setDisableBtn(true)
         } else setDisableBtn(false)
-    }, [errorName, errorPhone, errorDate, focusName, focusPhone, focusDate]);    
+    }, [errorName, errorPhone, errorDate, focusName, focusPhone, focusDate]);  
+
+    useEffect(() => {
+        if(scrollToForm) {
+            contactForm.current.scrollIntoView({behavior: "smooth"})
+        }
+    }, [scrollToForm] )  
 
     return(
     <section className="container formSection" ref={contactForm}>
@@ -241,12 +243,7 @@ const Form = () => {
             <a href="tel:+79632726269" className="form__btn">Позвонить</a>
         </div>
 
-        {isOpen 
-            ? <Modal
-                // children={<ModalContent />}
-            /> 
-            : null
-        }
+        {isOpenForm && <Modal children={<ModalContent/>} closeModal={closeModal} />}
     </section>)
 }
 

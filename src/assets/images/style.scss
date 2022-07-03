@@ -248,7 +248,7 @@ $footer-text-color: #6e6e73;
         width: 100vw;
         height: 100vh;
         background-color: rgba(0, 0, 0, 0.5);
-        position: fixed;
+        position: fixed !important;
         top: 0;
         left: 0;
         z-index: 9;
@@ -358,13 +358,14 @@ $footer-text-color: #6e6e73;
 
 .user-data {
     padding-top: 206px;
-    padding-left: 15%;
+    margin-left: 30%;
     display: grid;
     max-width: 665px;
     width: 100%;
 
     &__table {
         padding-bottom: 45px;
+        width: 80%;
     }
 
     &__table-head {
