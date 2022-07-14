@@ -1,38 +1,21 @@
-const Input = () => {
-    return(<>
-    <div>
+const Input = ({htmlFor, label, type, id, name, onChange, value, error, onFocus, errorMessage}) => {
+    return(
+    <div className="login__field">
         <label
-            htmlFor='comment'
+            htmlFor={htmlFor}
             className="login__label"
-        >Комментарий</label>
+        >{label}</label>
         <input 
-            className="login__input"
-            // onFocus={() => setFocusComment(true)}
-            // onBlur={() => valueComment.length === 0 ? setFocusComment(false) : null}
-            type='comment'
-            id='comment'
-            name='comment'                    
-            // onChange={e => setValueComment(e.target.value)}
-            // value={valueComment}
+            className={!error ? "login__input" : "login__input login__input--error"}
+            type={type}
+            id={id}
+            name={name}
+            onChange={onChange}           
+            value={value}
+            onFocus={onFocus}
         />
-    </div>
-    <div>
-        <label
-            htmlFor='comment'
-            className="login__label"
-        >Комментарий</label>
-        <input 
-            className="login__input"
-            // onFocus={() => setFocusComment(true)}
-            // onBlur={() => valueComment.length === 0 ? setFocusComment(false) : null}
-            type='comment'
-            id='comment'
-            name='comment'                    
-            // onChange={e => setValueComment(e.target.value)}
-            // value={valueComment}
-        />
-    </div>
-    </>)
+        {error && <small className="error">{errorMessage}</small>}
+    </div>)
 }
 
 export default Input

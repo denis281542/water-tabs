@@ -1,4 +1,5 @@
 @import url('https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700;900&display=swap');
+$error-color: #F20D0D;
 
 $header-height: 48px;
 $footer-background: #f5f5f7;
@@ -226,7 +227,12 @@ $footer-text-color: #6e6e73;
 }
 
 .error {
-    color: #e30000 !important;
+    font-weight: 500;
+    font-size: 14px;
+    color: $error-color;
+    position: absolute;
+    bottom: 0;
+    left: 5px;
 }
 
 .footer {
@@ -255,22 +261,24 @@ $footer-text-color: #6e6e73;
         display: flex;
         align-items: center;
         justify-content: center;
+        backdrop-filter: blur(4px);
     }
 
     &__window {
-        padding: 25px;
+        // padding: 25px;
         margin: 25px;
         width: auto;
         height: auto;
-        border-radius: 15px;
         background-color: #fff;
         display: flex;
         flex-direction: column;
         position: relative;
+        background: #D3DDD0;
+        border-radius: 5.34202px;
     }
 
     &__inner {
-        padding: 20px;
+        padding: 88px 125px 44px;
         text-align: center;
     }
 
@@ -394,6 +402,7 @@ $footer-text-color: #6e6e73;
     padding: 14px 20px;
     color: #F5EAEA;
     font-size: 20px;
+    cursor: pointer;
 }
 
 // Media queries
@@ -457,18 +466,45 @@ $footer-text-color: #6e6e73;
 }
 
 .login {
+    &__fields {
+        padding-bottom: 38px;
+    }
+
+    &__field {
+        position: relative;
+        text-align: left;
+        display: flex;
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 7.72px;
+        padding-bottom: 22px;
+    }
+
     &__label {
         font-weight: 300;
-        font-size: 20px;
-        line-height: 36px;
+        font-size: 18px;
         letter-spacing: 0.09em;
     }
+
     &__input {
-        width: 94%;
-        height: 51px;
+        width: 322.9px;
+        height: 53.98px;
         background: #F9F2F2;
         border: 1px solid #746363;
         box-shadow: 5px 7px 20px rgba(0, 0, 0, 0.25);
         border-radius: 8px;
+        font-size: 18px;
+        padding: 15px 12px;
+
+        &--error {
+            background-color: #FCAFAF;
+            border-color: #F46868;
+            box-shadow: 2.96779px 4.15491px 11.8712px rgba(227, 10, 10, 0.47);
+        }
+    }
+
+    &__btn {
+        padding: 10px 36px;
+        font-size: 18px;
     }
 }
