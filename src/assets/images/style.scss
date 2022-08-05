@@ -233,6 +233,7 @@ $footer-text-color: #6e6e73;
     position: absolute;
     bottom: 0;
     left: 5px;
+    width: 100%;
 }
 
 .footer {
@@ -265,31 +266,37 @@ $footer-text-color: #6e6e73;
     }
 
     &__window {
-        // padding: 25px;
         margin: 25px;
         width: auto;
-        height: auto;
+        max-height: 90vh;
+        overflow-y: auto;
         background-color: #fff;
         display: flex;
         flex-direction: column;
         position: relative;
         background: #D3DDD0;
         border-radius: 5.34202px;
+
+        &::-webkit-scrollbar {
+            display: none;
+        }
     }
 
     &__inner {
-        padding: 88px 125px 44px;
+        padding: 30px 125px 44px;
         text-align: center;
+        flex-direction: column;
+        display: flex;
     }
 
     &__btn-close {
         width: 15px;
         height: auto;
         align-self: flex-end;
-        position: absolute;
+        position: sticky;
+        top: 2px;
+        right: 7px;
         z-index: 0;
-        top: 5px;
-        right: 8px;
         cursor: pointer;
         border: none;
         background-color: transparent;
@@ -466,10 +473,6 @@ $footer-text-color: #6e6e73;
 }
 
 .login {
-    &__fields {
-        padding-bottom: 38px;
-    }
-
     &__field {
         position: relative;
         text-align: left;
@@ -506,5 +509,17 @@ $footer-text-color: #6e6e73;
     &__btn {
         padding: 10px 36px;
         font-size: 18px;
+        margin-top: 18px;
+        width: auto;
+        align-self: center;
     }
+}
+
+.button-as-link {
+    border: none;
+    background-color: transparent;
+    text-decoration: underline;
+    font-size: 18px;
+    letter-spacing: 0.09em;
+    cursor: pointer;
 }

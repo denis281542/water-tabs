@@ -5,24 +5,29 @@ import { scrollToForm } from "../store/anchor/anchorSlice";
 import { isOpenModal } from "../store/modal/modalSlice";
 import Modal from "./modal";
 import Login from "./Login";
+import RegistrationFrom from "./RegistrationFrom";
 
 const Header = () => {
     const dispatch = useDispatch()
     const user = useSelector(state => state.user.name)
     const isOpen = useSelector(state => state.modal.isOpen);
+    const login = useSelector(state => state.modal.login);
 
     const closeModal = () => {
         dispatch(isOpenModal(false))
     }
 
     return(<header className="header">
-        <img 
-            className="header__icon"
-            src={icon} 
-            alt="Логотип сайта по замене счетчиков воды в Верхней Салде"
-        />
+        <Link to="/">
+            <img 
+                className="header__icon"
+                src={icon} 
+                alt="Логотип сайта по замене счетчиков воды в Верхней Салде"
+            />
+        </Link>
+        
         <div className="header__contacts">
-            {isOpen && <Modal children={<Login/>} closeModal={closeModal} />}
+            {isOpen && <Modal children={login ? <Login /> : <RegistrationFrom/>} closeModal={closeModal} />} 
             {user 
                 ? <Link 
                     className="header__btn" 

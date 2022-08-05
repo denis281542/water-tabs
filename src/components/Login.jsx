@@ -2,13 +2,14 @@ import Input from "./Input"
 import Button from "./Button"
 import { useState } from "react"
 import { useDispatch } from "react-redux";
-import { findUserByLoginOrPhone } from "../store/user/userSlice";
+import { switchLogin } from "../store/modal/modalSlice";
+import { login } from "../store/user/userSlice";
 
 const Login = () => {
     const dispatch = useDispatch();
 
-    const [login, setLoginValue] = useState('');
-    const [password, setPasswordValue] = useState('');
+    const [loginValue, setLoginValue] = useState('');
+    const [passwordValue, setPasswordValue] = useState('');
     const [errorLogin, setErrorLogin] = useState(false);
     const [errorPassword, setErrorPassword] = useState(false);
 
@@ -16,17 +17,18 @@ const Login = () => {
         if(login.length === 0) {
             setErrorLogin(true)
         }
-        if(password.length === 0) {
+        if(passwordValue.length === 0) {
             setErrorPassword(true)
         }
     }
 
     const submitLogin = () => {
         checkInputs()
+        dispatch(login(loginValue, passwordValue))
+    }
 
-        dispatch(findUserByLoginOrPhone(login))
-        console.log(login);
-
+    const openRegistrationModal = () => {
+        dispatch(switchLogin(false))
     }
 
     return(<>
@@ -38,7 +40,7 @@ const Login = () => {
                 id="login"
                 name="login"
                 onChange={e => setLoginValue(e.target.value)}
-                value={login}
+                value={loginValue}
                 error={errorLogin}
                 onFocus={() => setErrorLogin(false)}
                 errorMessage="Введите логин или номер телефона"
@@ -50,12 +52,17 @@ const Login = () => {
                 id="password"
                 name="password"
                 onChange={e => setPasswordValue(e.target.value)}
-                value={password}
+                value={passwordValue}
                 error={errorPassword}                
                 onFocus={() => setErrorPassword(false)}
                 errorMessage="Заполните пароль"
             />
         </div>
+        
+        <button 
+            className="button-as-link"
+            onClick={openRegistrationModal}
+        >Зарегистрироваться</button>
         
         <Button 
             text="Войти"

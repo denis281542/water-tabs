@@ -5,6 +5,7 @@ export const modalSlice = createSlice({
     initialState: {
       isOpen: false,
       isOpenForm: false,
+      login: true,
     },
     reducers: {
       isOpenModal: (state, action) => {
@@ -22,11 +23,14 @@ export const modalSlice = createSlice({
         } else {
           document.body.style.overflow = 'visible'
         }
+      },
+      switchLogin: (state, action) => {
+        state.login = action.payload
       }
     }
   })
   
-  export const { isOpenModal, isOpenModalForm } = modalSlice.actions
+  export const { isOpenModal, isOpenModalForm, switchLogin } = modalSlice.actions
 
   export default modalSlice.reducer
 

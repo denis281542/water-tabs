@@ -17,7 +17,6 @@ const Form = () => {
 
     const scrollToForm = useSelector(state => state.anchor.clickCounter);
     const isOpenForm = useSelector(state => state.modal.isOpenForm);
-    console.log(isOpenForm);
     const contactForm = useRef(null);
 
     let labelPhone = "label"
