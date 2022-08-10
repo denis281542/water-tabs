@@ -26,6 +26,9 @@ const RegistrationFrom = () => {
 
     const [isDirty, setDirty] = useState(false);
 
+
+    const [errorMessage, setErrorMessage] = useState('');
+
     const dispatch = useDispatch();
     const isLoginExist = useSelector(state => state.user.isLoginExist);
 
@@ -55,19 +58,38 @@ const RegistrationFrom = () => {
         const isEmail =  String(email).toLowerCase().match(
             /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/
         );
-
-        return !isEmail && true
+        return isEmail && true
     }; 
     
     const isCyrillic = word => {
         const isValid = /[а-яА-ЯЁё]/.test(word)
-        return !isValid && true
+        return isValid && true
     }
 
     const isLogin = login => {
         const isValid = /[a-zA-Z]/gm.test(login)
-        return !isValid && true
+        return isValid && true
     } 
+
+    const isPassword = password => {
+        const isValid = /[a-zA-Z]/gm.test(password)
+
+        if(password.length === 0) {
+            setErrorMessage('Заполните пароль')
+            return 
+        }
+
+        if(!isValid) {
+            setErrorMessage('Пароль должен быть на английском')
+            return 
+        }
+        
+        password.length < 6 || password.length > 14 
+            ? setErrorMessage('Пароль должен быть от 6 до 14 символов') 
+            : setErrorMessage('')
+    }
+
+    //исправить ошибку валидации пароля при первой ошибке
     
     useEffect(() => {
         isLoginExist ? setLoginError(true) : setLoginError(false);
@@ -93,7 +115,7 @@ const RegistrationFrom = () => {
             type="text"
             id="name"
             name="name"
-            validateInput={e => isCyrillic(e)}
+            validateInput={name => isCyrillic(name)}
         />
         <Input
             htmlFor="login"
@@ -101,7 +123,7 @@ const RegistrationFrom = () => {
             type="text"
             id="login"
             name="login"
-            validateInput={e => isLogin(e)}            
+            validateInput={login => isLogin(login)}            
             // onChange={e => setLogin(e.target.value)}
             // value={login}
             // error={loginError.error}                
@@ -119,7 +141,7 @@ const RegistrationFrom = () => {
             type="email"
             id="email"
             name="email"
-            validateInput={e => isEmail(e)}            
+            validateInput={email => isEmail(email)}            
             // onChange={e => setEmail(e.target.value)}
             // value={email}
             // error={emailError.error}                
@@ -137,12 +159,13 @@ const RegistrationFrom = () => {
             type="text"
             id="password"
             name="password"
+            validateInput={password => isPassword(password)} 
+            errorMessage={errorMessage}          
             // onChange={e => setPassword(e.target.value)}
             // value={password}
             // error={passwordError.error}                
             // onFocus={() => setPasswordError({error: false})}
             // onBlur={() => !password.length && setPasswordError({error: true, message: "Заполните пароль"})}
-            errorMessage="Заполните пароль"
         />
         <Input
             htmlFor="passwordConfirm"
