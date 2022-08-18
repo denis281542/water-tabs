@@ -24,9 +24,6 @@ const RegistrationFrom = () => {
     const [passwordError, setPasswordError] = useState(false);
     const [passwordConfirmError, setPasswordConfirmError] = useState(false);
 
-    const [isDirty, setDirty] = useState(false);
-
-
     const [errorMessage, setErrorMessage] = useState('');
 
     const dispatch = useDispatch();
@@ -60,10 +57,29 @@ const RegistrationFrom = () => {
         );
         return isEmail && true
     }; 
+
+
+    /////////////
     
-    const isCyrillic = word => {
-        const isValid = /[а-яА-ЯЁё]/.test(word)
-        return isValid && true
+    // const isCyrillic = (word, ) => {
+    //     const isValid = /[а-яА-ЯЁё]/.test(word)
+        
+    //     if(!isValid) {
+    //          if(word.length === 0) { 
+    //             setErrorMessage('Заполните поле') 
+    //         } else setErrorMessage('Имя должно быть на русском') 
+    //     } else setErrorMessage('') 
+    // }
+
+
+    const validation = value => /[а-яА-ЯЁё]/.test(value)
+
+    const checkInput = (validation, value, errorValidate) => {       
+        if(!validation(value)) {
+             if(value.length === 0) { 
+                setErrorMessage('Заполните поле') 
+            } else setErrorMessage(errorValidate) 
+        } else setErrorMessage('') 
     }
 
     const isLogin = login => {
@@ -101,10 +117,7 @@ const RegistrationFrom = () => {
         isLogin(login) 
         isEmail(email) 
 
-        // if(!nameError.error && !loginError.error && !emailError.error && !passwordError.error && comparePasswords()) {
-        if(isDirty) {
-            dispatch(registration({ name, login, email, password }))
-        } // установить isDirty для каждого поля, а не только name
+        // dispatch(registration({ name, login, email, password }))
     }
     
   return (<>
@@ -115,7 +128,8 @@ const RegistrationFrom = () => {
             type="text"
             id="name"
             name="name"
-            validateInput={name => isCyrillic(name)}
+            validateInput={name => checkInput(validation, name, 'Имя должно быть на русском')}
+            errorMessage={errorMessage}
         />
         <Input
             htmlFor="login"

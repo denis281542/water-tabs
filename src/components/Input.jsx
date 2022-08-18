@@ -6,8 +6,8 @@ const Input = ({htmlFor, label, type, id, name, errorMessage, validateInput}) =>
     // const [errorMessage, setErrorMessage] = useState('');
 
     const onBlur = () => {
-        validateInput(value)
-        !!errorMessage ? setError(true) : setError(false)
+        console.log(validateInput(value));
+        validateInput(value) ? setError(false) : setError(true)
         // if(!value.length) {
         //     setError(true)
         //     setErrorMessage(`Заполните ${label.toLowerCase()}`)
