@@ -1,13 +1,12 @@
 import { useState } from "react";
 
-const Input = ({htmlFor, label, type, id, name, isValid, errorMsg, onChange, value}) => {
+const Input = ({htmlFor, label, type, id, name, isValid, errorMsg, onChange, value, comparePasswords}) => {
     const [error, setError] = useState(false);
     const [errorsPassword, setErrorsPassword] = useState([]);
     const [errorMessage, setErrorMessage] = useState(errorMsg);
 
     const checkInput = (validation, value, errorMsg) => {
         new Promise((resolve) => {
-            console.log(value);
             if(!validation(value)) {
                 if(value.length === 0) { 
                    setErrorMessage('Заполните поле');
@@ -20,6 +19,16 @@ const Input = ({htmlFor, label, type, id, name, isValid, errorMsg, onChange, val
         }).then(() => {
             setError(true);
             setErrorMessage(errorMsg);
+        }).then(() => {
+            if(name === 'passwordConfirm') {
+                if(comparePasswords()) {
+                    setErrorMessage('');
+                    setError(false)
+                } else {
+                    setErrorMessage(errorMsg);
+                    setError(true);
+                }
+            }
         })        
     }
 
@@ -60,6 +69,16 @@ const Input = ({htmlFor, label, type, id, name, isValid, errorMsg, onChange, val
             setErrorMessage('Пароль должен быть на английском');
         }
     }
+
+    const onFocus = () => {
+        setError(false)
+        setErrorsPassword([])
+    }
+
+    const onBlur = () =>  
+        name === 'password' 
+            ? checkPassword(value) 
+            : checkInput(isValid, value, errorMsg)
     
     return(
     <div className="login__field">
@@ -74,11 +93,8 @@ const Input = ({htmlFor, label, type, id, name, isValid, errorMsg, onChange, val
             name={name}          
             onChange={onChange}           
             value={value}
-            onFocus={() => {
-                setError(false)
-                setErrorsPassword([])
-            }}
-            onBlur={() => name === 'password' ? checkPassword(value) : checkInput(isValid, value, errorMsg)}
+            onFocus={onFocus}
+            onBlur={onBlur}
         />
         {error && <small className="error">{errorMessage}</small>}
     </div>)

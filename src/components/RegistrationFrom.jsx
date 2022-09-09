@@ -46,7 +46,7 @@ const RegistrationFrom = () => {
         });
     };
 
-      console.log(values);
+    const comparePasswords = () => values.password === values.passwordConfirm ? true : false;
     
   return (<>
     <div className="login__fields">
@@ -100,17 +100,10 @@ const RegistrationFrom = () => {
             id="passwordConfirm"
             name="passwordConfirm"
             isValid={() => false}
-
-
-
-            //доделать в др инпуты
             value={values.passwordConfirm}
             onChange={handleInputChange}
-
-
-
-
-
+            comparePasswords={comparePasswords}
+            errorMsg='Пароли не совпадают'            
         />
     </div>
     
